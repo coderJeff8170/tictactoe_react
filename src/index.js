@@ -4,6 +4,9 @@ import './index.css';
 
 
 //  TODO: Display the location for each move in the format (col, row) in the move history list.
+  //a: make space for each prop
+  //b: figure out where the col/row info should live, where it should come from
+  //
 //  TODO: Bold the currently selected item in the move list.
 //  TODO: Rewrite Board to use two loops to make the squares instead of hardcoding them.
 //  TODO: Add a toggle button that lets you sort the moves in either ascending or descending order.
@@ -72,6 +75,8 @@ const Square = (props) => {
     handleClick(i) {
       const history = this.state.history.slice(0, this.state.stepNumber + 1);
       const current = history[history.length-1];
+
+      //TODO: assign the position of the move here, maybe using a switch statement?
       
       const squares = current.squares.slice();
       if(calculateWinner(squares) || squares[i]) return;
@@ -95,8 +100,10 @@ const Square = (props) => {
       const current = history[this.state.stepNumber];
 
       const priorMoves = history.map((step, move) => {
+          const col = 0; 
+          const row = 0;
           const desc = move ? 
-          `Go to move ${move}` :
+          `Go to move ${move} (col: ${col}, row: ${row})` :
           `Go to game start`
         return (
         <li key={move}>
