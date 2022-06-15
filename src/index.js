@@ -32,6 +32,7 @@ const Square = (props) => {
     renderSquare(i) {
       return (
         <Square 
+            key={`square${i}`}
             value={this.props.squares[i]}
             onClick={() => this.props.onClick(i)}
         />
@@ -47,7 +48,13 @@ const Square = (props) => {
           row.push(this.renderSquare(k));
           k++;
         }
-        board.push(<div className="board-row">{row}</div>)
+        board.push(
+        <div 
+          key={`row ${i}`} 
+          className="board-row"
+          >
+            {row}
+        </div>)
       }
       return board;
     }
