@@ -8,8 +8,8 @@ import './index.css';
   //b: make a property on each move to store the col and row [x]
   //c: get the position of both with a helper function return formate [col, row] [X]
   //
-//  TODO: Bold the currently selected item in the move list.
-  //
+//  TODO: Bold the currently selected item in the move list.[X]
+  //a: 
 //  TODO: Rewrite Board to use two loops to make the squares instead of hardcoding them.
 //  TODO: Add a toggle button that lets you sort the moves in either ascending or descending order.
 //  TODO: When someone wins, highlight the three squares that caused the win.
@@ -114,7 +114,12 @@ const Square = (props) => {
           `Go to game start`
         return (
         <li key={move}>
-            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+            <button 
+            className={move === this.state.stepNumber ? "boldText" : ""}
+            onClick={() => this.jumpTo(move)}
+            >
+              {desc}
+            </button>
         </li>
         );
       });
