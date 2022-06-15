@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 
-//  TODO: Display the location for each move in the format (col, row) in the move history list.
-  //a: make space for each prop
-  //b: figure out where the col/row info should live, where it should come from
+//  TODO: Display the location for each move in the format (col, row) in the move history list.[X]
+  //a: make space for each prop[X]
+  //b: make a property on each move to store the col and row [x]
+  //c: get the position of both with a helper function return formate [col, row] [X]
   //
 //  TODO: Bold the currently selected item in the move list.
+  //
 //  TODO: Rewrite Board to use two loops to make the squares instead of hardcoding them.
 //  TODO: Add a toggle button that lets you sort the moves in either ascending or descending order.
 //  TODO: When someone wins, highlight the three squares that caused the win.
@@ -76,13 +78,13 @@ const Square = (props) => {
       const history = this.state.history.slice(0, this.state.stepNumber + 1);
       const current = history[history.length-1];
 
-      //TODO: assign the position of the move here, maybe using a switch statement?
+      const position = getPosition(i);
       
       const squares = current.squares.slice();
       if(calculateWinner(squares) || squares[i]) return;
       squares[i] = this.state.xIsNext ? 'X' : 'O';
       this.setState({
-          history: history.concat([{ squares: squares}]),
+          history: history.concat([{ squares: squares, position: position}]),
           stepNumber: history.length,
           xIsNext: !this.state.xIsNext
       })
@@ -100,8 +102,13 @@ const Square = (props) => {
       const current = history[this.state.stepNumber];
 
       const priorMoves = history.map((step, move) => {
-          const col = 0; 
-          const row = 0;
+          let col = 0; 
+          let row = 0;
+          if(step.position){
+            col = step.position[0];
+            row = step.position[1];
+          }
+          
           const desc = move ? 
           `Go to move ${move} (col: ${col}, row: ${row})` :
           `Go to game start`
@@ -136,6 +143,39 @@ const Square = (props) => {
         </div>
       );
     }
+  }
+
+  function getPosition(square) {
+    let position;
+    switch(square) {
+      case 0:
+        position = [1, 1];
+        break;
+      case 1:
+        position = [2, 1];
+        break;
+      case 2:
+        position = [3, 1];
+        break;
+      case 3:
+        position = [1, 2];
+        break;
+      case 4:
+        position = [2, 2];
+        break;
+      case 5:
+        position = [3, 2];
+        break;
+      case 6:
+        position = [1, 3];
+        break;
+      case 7:
+        position = [2, 3];
+        break;
+      default:
+        position = [3, 3];
+    }
+    return position;
   }
 
   function calculateWinner(squares) {
