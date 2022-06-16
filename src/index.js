@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
@@ -36,8 +36,9 @@ const Square = (props) => {
 }
   
 const Board = (props) => {
-
+    
     const renderSquare = (i) => {
+      
       return (
         <Square 
             key={`square${i}`}
@@ -77,52 +78,40 @@ const Board = (props) => {
     
   }
   
-  class Game extends React.Component {
-      constructor(props) {
-          super(props);
-          this.state = {
-              history: [{
-                  squares: Array(9).fill(null)
-              }],
-              stepNumber: 0,
-              xIsNext: true,
-              priorMovesAscending: true
-          }
-      }
+  const Game = (props) => {
 
-    handleClick(i) {
-      const history = this.state.history.slice(0, this.state.stepNumber + 1);
-      const current = history[history.length-1];
+      const [history, setHistory] = useState([{squares: Array(9).fill(null)}]);
+      const [stepNumber, setStepNumber] =  useState(0);
+      const [xIsNext, setXIsNext] = useState(true);
+      const [priorMovesAscending, setPriorMovesAscending] = useState(true);
+
+    const handleClick = (i) => {
+      const currentHistory = history.slice(0, stepNumber + 1);
+      const current = currentHistory[currentHistory.length-1];
 
       const position = getPosition(i);
       
       const squares = current.squares.slice();
       if(calculateWinner(squares) || squares[i]) return;
-      squares[i] = this.state.xIsNext ? 'X' : 'O';
-      this.setState({
-          history: history.concat([{ squares: squares, position: position}]),// add isWinningMove prop?
-          stepNumber: history.length,
-          xIsNext: !this.state.xIsNext
-      })
+      squares[i] = xIsNext ? 'X' : 'O';
+
+      setHistory(history.concat([{ squares: squares, position: position}]));
+      setStepNumber(history.length);
+      setXIsNext(!xIsNext);
     }
 
-    jumpTo(step) {
-      //remove className of highlight from all squares
-      this.setState({
-        stepNumber: step,
-        xIsNext: (step % 2) === 0
-      })
+    const jumpTo = (step) => {
+      setStepNumber(step);
+      setXIsNext((step % 2) === 0);
     }
 
-    handleToggleMovesDisplay() {
-      this.setState({
-        priorMovesAscending: !this.state.priorMovesAscending
-      })
+    const handleToggleMovesDisplay = () => {
+      setPriorMovesAscending(!priorMovesAscending);
     }
-
-    render() {
-      const history = this.state.history;
-      const current = history[this.state.stepNumber];
+    
+      // const history = this.state.history; note that prior functions inside render function work fine
+      // when redefined as fat arrow constants when render function is eliminated for function componentry
+      const current = history[stepNumber];
 
       const priorMoves = history.map((step, move) => {
           let col = 0; 
@@ -138,8 +127,8 @@ const Board = (props) => {
         return (
         <li key={move}>
             <button 
-            className={move === this.state.stepNumber ? "boldText" : ""}
-            onClick={() => this.jumpTo(move)}
+            className={move === stepNumber ? "boldText" : ""}
+            onClick={() => jumpTo(move)}
             >
               {desc}
             </button>
@@ -153,7 +142,7 @@ const Board = (props) => {
       if(winner) {
         status = `${winner} has won!`;
       } else {
-        status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
+        status = `Next player: ${xIsNext ? 'X' : 'O'}`;
       }
 
       return (
@@ -161,23 +150,23 @@ const Board = (props) => {
           <div className="game-board">
             <Board 
             squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
+            onClick={(i) => handleClick(i)}
             />
           </div>
           <div className="game-info">
             <div>{status}</div>
             <button 
-              onClick={() => this.handleToggleMovesDisplay()}
+              onClick={() => handleToggleMovesDisplay()}
             >
-              {this.state.priorMovesAscending ? "Show Moves Descending" : "Show Moves Ascending"}
+              {priorMovesAscending ? "Show Moves Descending" : "Show Moves Ascending"}
             </button>
             <ol>
-              {this.state.priorMovesAscending ? priorMoves : priorMoves.reverse()}
+              {priorMovesAscending ? priorMoves : priorMoves.reverse()}
             </ol>
           </div>
         </div>
       );
-    }
+    
   }
 
   function getPosition(square) {
