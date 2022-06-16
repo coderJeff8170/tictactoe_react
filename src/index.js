@@ -28,6 +28,7 @@ const Square = (props) => {
         <button 
             className="square" 
             onClick={props.onClick}
+            //{props.isWinningSquare?classList.append("highlight"):classList.remove("highlight")}
         >
           {props.value}
         </button>
@@ -42,6 +43,7 @@ const Square = (props) => {
             key={`square${i}`}
             value={this.props.squares[i]}
             onClick={() => this.props.onClick(i)}
+            //maybe a prop for isWinningSquare
         />
       );
     }
@@ -98,13 +100,14 @@ const Square = (props) => {
       if(calculateWinner(squares) || squares[i]) return;
       squares[i] = this.state.xIsNext ? 'X' : 'O';
       this.setState({
-          history: history.concat([{ squares: squares, position: position}]),
+          history: history.concat([{ squares: squares, position: position}]),// add isWinningMove prop?
           stepNumber: history.length,
           xIsNext: !this.state.xIsNext
       })
     }
 
     jumpTo(step) {
+      //remove className of highlight from all squares
       this.setState({
         stepNumber: step,
         xIsNext: (step % 2) === 0
@@ -224,10 +227,17 @@ const Square = (props) => {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        console.log(lines[i]);//highlight these squares with a method
+        highlightSquares(lines[i]);
         return squares[a];
       }
     }
     return null;
+  }
+
+  function highlightSquares(squaresToHighlight) {
+    //iterate squares
+    //if square number is in squares to highlight, add class.
   }
   
   // ========================================
