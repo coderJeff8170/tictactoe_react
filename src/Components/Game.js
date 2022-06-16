@@ -20,8 +20,8 @@ const Game = (props) => {
     if(calculateWinner(squares) || squares[i]) return;
     squares[i] = xIsNext ? 'X' : 'O';
 
-    setHistory(history.concat([{ squares: squares, position: position}]));
-    setStepNumber(history.length);
+    setHistory(currentHistory.concat([{ squares: squares, position: position}]));
+    setStepNumber(currentHistory.length);
     setXIsNext(!xIsNext);
   }
 
@@ -52,6 +52,7 @@ const Game = (props) => {
       return (
       <li key={move}>
           <button 
+          data-testid={`move${move}`}
           className={move === stepNumber ? "boldText" : ""}
           onClick={() => jumpTo(move)}
           >

@@ -6,6 +6,8 @@ const Board = (props) => {
       
       return (
         <Square 
+            // data-testid={i}
+            testId={i}
             key={`square${i}`}
             value={props.squares[i]}
             onClick={() => props.onClick(i)}
