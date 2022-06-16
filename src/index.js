@@ -10,10 +10,17 @@ import './index.css';
   //
 //  TODO: Bold the currently selected item in the move list.[X]
   //a: 
-//  TODO: Rewrite Board to use two loops to make the squares instead of hardcoding them.
-//  TODO: Add a toggle button that lets you sort the moves in either ascending or descending order.
+//  TODO: Rewrite Board to use two loops to make the squares instead of hardcoding them.[X]
+//  TODO: Add a toggle button that lets you sort the moves in either ascending or descending order.[X]
+  //a: add the button x
+  //b: add a method to handle the click - what does it do x
+  //c: add a property that records the state of the button x
+  //d: conditionally render prior moves asc or desc depending on state; x
 //  TODO: When someone wins, highlight the three squares that caused the win.
+  //a: css class to highlight the square
+  //b: add class conditionally and leverage the col and row to show which squares won, or maybe alter the helper func
 //  TODO: When no one wins, display a message about the result being a draw.
+  //c: conditionally render draw message when all squares are full and calc winner never was true - possibly two new state vars...
 
 const Square = (props) => {
     
@@ -76,7 +83,8 @@ const Square = (props) => {
                   squares: Array(9).fill(null)
               }],
               stepNumber: 0,
-              xIsNext: true
+              xIsNext: true,
+              priorMovesAscending: true
           }
       }
 
@@ -100,6 +108,12 @@ const Square = (props) => {
       this.setState({
         stepNumber: step,
         xIsNext: (step % 2) === 0
+      })
+    }
+
+    handleToggleMovesDisplay() {
+      this.setState({
+        priorMovesAscending: !this.state.priorMovesAscending
       })
     }
 
@@ -149,7 +163,14 @@ const Square = (props) => {
           </div>
           <div className="game-info">
             <div>{status}</div>
-            <ol>{priorMoves}</ol>
+            <button 
+              onClick={() => this.handleToggleMovesDisplay()}
+            >
+              {this.state.priorMovesAscending ? "Show Moves Descending" : "Show Moves Ascending"}
+            </button>
+            <ol>
+              {this.state.priorMovesAscending ? priorMoves : priorMoves.reverse()}
+            </ol>
           </div>
         </div>
       );
