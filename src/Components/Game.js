@@ -80,7 +80,7 @@ const Game = (props) => {
           />
         </div>
         <div className="game-info">
-          <div>{status}</div>
+          <div data-testid="status">{status}</div>
           <button 
             onClick={() => handleToggleMovesDisplay()}
           >

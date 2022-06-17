@@ -31,6 +31,10 @@ body {
     text-align: center;
     width: 34px;
   }
+
+  .winningSquare {
+    border: 2px solid red;
+  }
   
   .square:focus {
     outline: none;

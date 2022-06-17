@@ -31,6 +31,12 @@ export function getPosition(square) {
     return position;
   }
 
+  function calculateWinningMoves(squares) {
+    //take functionality from calcWinner and put here
+    //return all three, and rfom calcWinner, return first part of object
+    
+  }
+
   export function calculateWinner(squares) {
     const lines = [
       [0, 1, 2],
@@ -56,4 +62,5 @@ export function getPosition(square) {
   export function highlightSquares(squaresToHighlight) {
     //iterate squares
     //if square number is in squares to highlight, add class.
+
   }
