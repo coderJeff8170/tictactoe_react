@@ -31,6 +31,8 @@ import './index.css';
 
   //FIXME: functionality has broken for slicing array of moves when starting from a specific move and eliminating the extras
 
+  //FIXME: x and o moves seem to be switch if clicked too fast
+  //FIXME: constantly delivers X on win?
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(<Game />);
   // ReactDOM.render(

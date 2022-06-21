@@ -1,17 +1,28 @@
+import { calculateWinningMoves } from '../Utilities/helperUtilities';
 import Square from './Square';
 
 const Board = (props) => {
     
     const renderSquare = (i) => {
-      
+      let winningSquare = false;
+
+      if(calculateWinningMoves(props.squares)) {
+        // console.log(calculateWinningMoves(props.squares))
+        const winningMoves = calculateWinningMoves(props.squares);
+        if(winningMoves.includes(i)) {
+          winningSquare = true;
+        }
+      }
+
       return (
         <Square 
             // data-testid={i}
-            testId={i}
+            testId={`square${i}`}
             key={`square${i}`}
             value={props.squares[i]}
             onClick={() => props.onClick(i)}
             //maybe a prop for isWinningSquare
+            isWinningSquare={winningSquare}
         />
       );
     }

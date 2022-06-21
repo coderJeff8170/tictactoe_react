@@ -31,13 +31,8 @@ export function getPosition(square) {
     return position;
   }
 
-  function calculateWinningMoves(squares) {
-    //take functionality from calcWinner and put here
-    //return all three, and rfom calcWinner, return first part of object
-    
-  }
-
-  export function calculateWinner(squares) {
+  export function calculateWinningMoves(squares) {
+    // console.log(squares);
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -51,16 +46,26 @@ export function getPosition(square) {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        console.log(lines[i]);//highlight these squares with a method
-        highlightSquares(lines[i]);
-        return squares[a];
+        return lines[i];
       }
     }
     return null;
   }
 
-  export function highlightSquares(squaresToHighlight) {
+  export function calculateWinner(squares) {
+    console.log(squares)
+    const winningMoves = calculateWinningMoves(squares);
+    console.log(winningMoves)
+    return winningMoves ? squares[winningMoves[0]] : null;
+  }
+
+  export function highlightSquares(squares) {
+    // const winningMoves = calculateWinningMoves(squares);
     //iterate squares
     //if square number is in squares to highlight, add class.
 
+  }
+
+  export function isWinningSquare(square) {
+    
   }

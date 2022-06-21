@@ -17,7 +17,11 @@ const Game = (props) => {
     const position = getPosition(i);
     
     const squares = current.squares.slice();
-    if(calculateWinner(squares) || squares[i]) return;
+    if(calculateWinner(squares) || squares[i]) {
+      //manage the highlight here??
+      // console.log(squares);
+      return;
+    } 
     squares[i] = xIsNext ? 'X' : 'O';
 
     setHistory(currentHistory.concat([{ squares: squares, position: position}]));

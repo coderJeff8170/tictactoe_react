@@ -1,13 +1,13 @@
-const Square = (props) => {
+const Square = ({testId, onClick, value, isWinningSquare}) => {
     
     return (
       <button 
-          data-testid={props.testId}
-          className="square" 
-          onClick={props.onClick}
+          data-testid={testId}
+          className={`square ${isWinningSquare ? "winningSquare" : ""}`} 
+          onClick={onClick}
           //{props.isWinningSquare?classList.append("highlight"):classList.remove("highlight")}
       >
-        {props.value}
+        {value}
       </button>
     ); 
 }
